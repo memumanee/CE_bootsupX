@@ -1,26 +1,34 @@
+// ไม่สามารถเรียกดู user ได้
+
+const { query } = require("express");
 const { userModel } = require("../../models");
+const rankingService = require("./rankingUser.service");
+//+++++ รอ quetion service
+// const getProgressService = require("./getProgressUser.service");
 
 module.exports = async function findOneUser(idData) {
-  console.log("get findOne ser");
-  console.log(idData);
+  // console.log("get findOne ser out");
   try {
+    const rank = await rankingService(idData);
+    // console.log(rank);
     const query = await userModel
-      .findOneById({ idData })
+      .findById({ _id: idData })
       .select("-_id -password");
-    console.log(query);
-
     const getUser = {
       name: query.name,
       username: query.username,
       score: query.score,
       group: query.group,
       finished: query.finished,
-      rank: await this.userRanking(idData),
-      progress: await this.getProgress(idData),
+      rank: rank,
+
+      // +++++ รอ quetion service
+      // progress: await getProgressService.getProgress(idData),
     };
+    // console.log(getUser);
     return getUser;
   } catch (error) {
-    loggerError.error(error);
+    console.log(error.message);
     return null;
   }
 };

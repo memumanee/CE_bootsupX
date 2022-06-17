@@ -1,5 +1,4 @@
 const { getPasswordUser } = require("../../services/user");
-console.log("out findall");
 
 module.exports = async function getPassword(req, res) {
   console.log("getPassword out");

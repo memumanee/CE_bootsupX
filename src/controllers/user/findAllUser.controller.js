@@ -1,9 +1,6 @@
 const { findAllUser } = require("../../services/user");
-console.log("out findall");
 
 module.exports = async function findAll(req, res) {
-  console.log("findAll");
-
   try {
     console.log("findAll controller");
     const query = await findAllUser();
